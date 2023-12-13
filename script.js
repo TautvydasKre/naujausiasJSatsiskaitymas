@@ -51,7 +51,7 @@
 // console.log(dogs2FromLS[1].cat2);
 
 // localStorage.removeItem("doggy");
-localStorage.clear();
+// localStorage.clear();
 
 // sessionStorage.setItem("dogsArrayWIthObjects", JSON.stringify(dogs2));
 
@@ -188,65 +188,93 @@ localStorage.clear();
 
 // ------------------------------------------------------
 
-// 1.
-import result from "./data.js";
-console.log(result);
+// // 1.
+// import result from "./data.js";
+// console.log(result);
 
-// 2.
-const tikrinam = JSON.parse(localStorage.getItem("favorites"));
-// console.log(tikrinam);
+// // 2.
+// const tikrinam = JSON.parse(localStorage.getItem("favorites"));
+// // console.log(tikrinam);
 
-// 3.
-const fav = tikrinam === null ? [] : JSON.parse(tikrinam);
-console.log(fav);
+// // 3.
+// const fav = tikrinam === null ? [] : JSON.parse(tikrinam);
+// console.log(fav);
 
-// 4.
-const getMovies = (id) => {
-  const movie = result.find((el) => el.id === id);
-  // console.log(movie);
-  return movie;
-};
+// // 4.
+// const getMovies = (id) => {
+//   const movie = result.find((el) => el.id === id);
+//   // console.log(movie);
+//   return movie;
+// };
 
-getMovies(414906);
+// getMovies(414906);
 
-// 5.
-const myMovies = (id) => {
-  const loved = {
-    id: getMovies(id).id,
-    title: getMovies(id).title,
-  };
-  console.log(loved);
-  const movieExistInFavorites = fav.find((el) => el.id === loved.id);
-  if (movieExistInFavorites) {
-    alert("Filmuks jau prazets");
+// // 5.
+// const myMovies = (id) => {
+//   const loved = {
+//     id: getMovies(id).id,
+//     title: getMovies(id).title,
+//   };
+//   console.log(loved);
+//   const movieExistInFavorites = fav.find((el) => el.id === loved.id);
+//   if (movieExistInFavorites) {
+//     alert("Filmuks jau prazets");
+//   } else {
+//     fav.push(loved);
+//     localStorage.setItem("favorites", JSON.stringify(fav));
+//     alert("Itrauktas i must watch");
+//   }
+// };
+// myMovies(414906);
+// myMovies(284054);
+// myMovies(438148);
+
+// const print = () => {
+//   const fromLS = JSON.parse(localStorage.getItem("favorites"));
+//   console.log(fromLS);
+//   fromLS.forEach((el) => console.log(`id: ${el.id}, title: ${el.title}`));
+// };
+// print();
+
+// const removeMovie = (id) => {
+//   const fromLS = JSON.parse(localStorage.getItem("favorites"));
+//   const movieIndex = fromLS.findIndex((movie) => movie.id === id);
+//   console.log(movieIndex);
+//   if (movieIndex > -1) {
+//     alert(`filmas${fromLS[movieIndex].title} panaikintas`);
+//     fromLS.splice(movieIndex, 1);
+//     localStorage.setItem("favorites", JSON.stringify(fromLS));
+//   } else {
+//     alert(`movie not found`);
+//   }
+//   localStorage.setItem("favorites", JSON.stringify(fromLS));
+// };
+// removeMovie(438148);
+
+import data from "./data.json" assert { type: "json" };
+console.log(data);
+const patikra = localStorage.getItem("countries");
+console.log(patikra);
+const sal = patikra === null ? [] : JSON.parse(patikra);
+console.log(sal);
+data.forEach((el, index) => {
+  if (!el.hasOwnProperty(`capital`)) {
+    const country = {
+      id: index + 1,
+      name: el.name.common,
+      capital: "Data not found",
+    };
+    console.log(country);
+    sal.push(country);
   } else {
-    fav.push(loved);
-    localStorage.setItem("favorites", JSON.stringify(fav));
-    alert("Itrauktas i must watch");
+    const country = {
+      id: index + 1,
+      name: el.name.common,
+      capital: el.capital[0],
+    };
+    console.log(country);
+    sal.push(country);
   }
-};
-myMovies(414906);
-myMovies(284054);
-myMovies(438148);
-
-const print = () => {
-  const fromLS = JSON.parse(localStorage.getItem("favorites"));
-  console.log(fromLS);
-  fromLS.forEach((el) => console.log(`id: ${el.id}, title: ${el.title}`));
-};
-print();
-
-const removeMovie = (id) => {
-  const fromLS = JSON.parse(localStorage.getItem("favorites"));
-  const movieIndex = fromLS.findIndex((movie) => movie.id === id);
-  console.log(movieIndex);
-  if (movieIndex > -1) {
-    alert(`filmas${fromLS[movieIndex].title} panaikints`);
-    fromLS.splice(movieIndex, 1);
-    localStorage.setItem("favorites", JSON.stringify(fromLS));
-  } else {
-    alert(`movie not found`);
-  }
-  localStorage.setItem("favorites", JSON.stringify(fromLS));
-};
-removeMovie(284054);
+});
+console.log(sal);
+localStorage.setItem("countries", JSON.stringify(sal));
